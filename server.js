@@ -13,6 +13,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use('/assets', express.static('./assets'));
 
+// routing
+require('./routes/apiRoutes')(app);
+require('./routes/htmlRoutes')(app);
+
 app.listen(PORT, function() {
     console.log('API server now on PORT ' + PORT);
 });
