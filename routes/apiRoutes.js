@@ -39,3 +39,5 @@ for (currentNote of data) {
 fs.writeFileSync('./db/db.json', JSON.stringify(data));
 res.json(data);
 });
+
+module.exports = router;
