@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const { response } = require('express');
 const fs = require('fs');
+const path = require('path');
 const data = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
 
 router.get('/api/notes', () => {
