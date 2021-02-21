@@ -11,7 +11,7 @@ var PORT = process.env.PORT || 3001;
 // Setup express app to parse data
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use('/assets', express.static('./assets'));
+app.use('/assets', express.static('./public/assets'));
 
 // routing
 app.use('/api', apiRoutes);

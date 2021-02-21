@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const { response } = require('express');
 const fs = require('fs');
 const path = require('path');
 const data = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
@@ -13,11 +12,11 @@ router.get('/api/notes/:id', (req, res) => {
 });
 
 router.post('/api/notes', (req, res) => {
-    let note = req.body;
+    let newNote = req.body;
     let uniqueId = (data.length).toString();
     console.log(uniqueId);
     note.id = uniqueId;
-    data.push(note);
+    data.push(newNote);
 
     fs.writeFileSync('./db/db.json', JSON.stringify(data), function(err) {
         if (err) throw (err);
