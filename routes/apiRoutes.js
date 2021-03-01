@@ -1,31 +1,53 @@
 const router = require('express').Router();
 const fs = require('fs');
+// const { parse } = require('path');
 const path = require('path');
-const data = JSON.parse(fs.readFileSync('./db/db.json', 'utf8'));
+const db = require('../db/db.json');
+// const data = JSON.parse(fs.readFileSync(path.join(__dirname, '/db/db.json')));
 
-router.get('/api/notes', () => {
-    res.json(data);
+// function getNotes() {
+//     return fs.readFileAsync('/db/db.json', 'utf8').then(notes => {
+//       JSON.parse(notes);
+//       parsedNotes.title = notes.title;
+//       parsedNotes.text = notes.text;
+//       // make sure data is parsed as an array
+//       return parsedNotes
+//   })
+//   }
+// getNotes();
+
+router.get('/notes', (req, res) => {
+    res.json(db)
 });
 
-router.get('/api/notes/:id', (req, res) => {
+router.get('/notes/:id', (req, res) => {
     res.json(data[Number(req.params.id)]);
 });
 
-router.post('/api/notes', (req, res) => {
+router.post('/notes', (req, res) => {
     let newNote = req.body;
-    let uniqueId = (data.length).toString();
-    console.log(uniqueId);
-    note.id = uniqueId;
-    data.push(newNote);
+   fs.readFile('./db/db.json', (err, data) => {
+       if (err) throw err;
+       dbData = JSON.parse(data);
+       dbData.push(newNote);
+       let number = 1;
+       dbData.forEach((note, index) => {
+           note.id = number;
+           number++;
+           return dbData;
+       });
+       console.log(dbData);
 
-    fs.writeFileSync('./db/db.json', JSON.stringify(data), function(err) {
-        if (err) throw (err);
-    });
+       stringData = JSON.stringify(dbData);
 
-    res.json(data);
+       fs.writeFile('./db/db.json', stringData, (err, data) => {
+           if (err) throw err;
+       });
+   });
+res.send('Thank you for your note!')
 });
 
-router.delete('/api/notes/:id', (req, res) => {
+router.delete('/notes/:id', (req, res) => {
     let noteId = req.params.id;
     let newId = 0;
     console.log(`Deleting note ID ${noteId}`);
